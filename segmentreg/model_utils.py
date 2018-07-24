@@ -59,3 +59,22 @@ def segment_merge(segments, threshold_diff = .05):
         del segments[index]
     
     return segments
+
+
+# Removes data points that do that have certain num of neighbors within a certain distance
+# time = n ^ 2 
+def neighborhood_filter(df, min_dist = 1.0, min_neighbors = 1):
+    # Setup
+    df = df.reset_index(drop=True)
+    new_dfs = list()
+    distances = pdist(df.values, metric='euclidean')
+    dist_matrix = squareform(distances)
+    
+    for i in range(dist_matrix.shape[0]):
+        indexes = np.arange(dist_matrix.shape[0])[dist_matrix[i] <= min_dist]
+        
+        if len(indexes) >= min_neighbors:
+            new_dfs.append(df.loc[indexes, :])
+#             new_dfs.append(df.loc[i])
+    
+    return pd.concat(new_dfs, axis=0).drop_duplicates()
