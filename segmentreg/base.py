@@ -153,7 +153,24 @@ class SegmentedRegression:
 
         return np.median(var)
 
+    # Edited by Alex Le
     def predict(self, x):
+#         segments = self.segments_
+# #         idx = np.argsort(X)
+# #         X = X[idx]
+        
+#         if len(segments) == 1:
+#             _, k, b = segments[0]
+#             return k * X + b
+#         else:
+#             ans = list()
+#             for x in X:
+#                 for i in range(len(segments)):
+#                     if len(segments) - 1 == i or (segments[i][0] <= x and segments[i + 1][0] > x):
+#                         ans.append(segments[i][1] * x + segments[i][2])
+#                         break
+#             return np.array(ans)
+
         segments = self.segments_
         if len(segments) == 1:
             _, k, b = segments[0]
